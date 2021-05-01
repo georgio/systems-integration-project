@@ -123,11 +123,11 @@
 			this.datePicker.CustomFormat = "M-d-yy";
 			this.datePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
 			this.datePicker.Location = new System.Drawing.Point(152, 264);
-			this.datePicker.MinDate = new System.DateTime(2021, 4, 28, 0, 0, 0, 0);
+			this.datePicker.MinDate = System.DateTime.Now;
 			this.datePicker.Name = "datePicker";
 			this.datePicker.Size = new System.Drawing.Size(128, 20);
 			this.datePicker.TabIndex = 9;
-			this.datePicker.Value = new System.DateTime(2021, 4, 28, 0, 0, 0, 0);
+			this.datePicker.Value = System.DateTime.Now;
 			// 
 			// comboBox1
 			// 
@@ -161,12 +161,12 @@
 			this.timePicker.CustomFormat = "h:mmtt";
 			this.timePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
 			this.timePicker.Location = new System.Drawing.Point(152, 325);
-			this.timePicker.MinDate = new System.DateTime(2021, 4, 28, 0, 0, 0, 0);
+			this.timePicker.MinDate = System.DateTime.Now;
 			this.timePicker.Name = "timePicker";
 			this.timePicker.ShowUpDown = true;
 			this.timePicker.Size = new System.Drawing.Size(128, 20);
 			this.timePicker.TabIndex = 11;
-			this.timePicker.Value = new System.DateTime(2021, 4, 28, 0, 0, 0, 0);
+			this.timePicker.Value = System.DateTime.Now;
 			// 
 			// label7
 			// 
