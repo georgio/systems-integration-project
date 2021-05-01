@@ -64,7 +64,7 @@
 			this.label2.Location = new System.Drawing.Point(27, 113);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(104, 20);
-			this.label2.TabIndex = 1;
+			this.label2.TabIndex = 2;
 			this.label2.Text = "First Name:";
 			// 
 			// label3
@@ -72,7 +72,7 @@
 			this.label3.Location = new System.Drawing.Point(27, 213);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(112, 18);
-			this.label3.TabIndex = 2;
+			this.label3.TabIndex = 4;
 			this.label3.Text = "Guests:";
 			// 
 			// label4
@@ -80,7 +80,7 @@
 			this.label4.Location = new System.Drawing.Point(27, 267);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(104, 20);
-			this.label4.TabIndex = 3;
+			this.label4.TabIndex = 6;
 			this.label4.Text = "Date:";
 			// 
 			// firstNameBox
@@ -88,21 +88,21 @@
 			this.firstNameBox.Location = new System.Drawing.Point(152, 111);
 			this.firstNameBox.Name = "firstNameBox";
 			this.firstNameBox.Size = new System.Drawing.Size(128, 20);
-			this.firstNameBox.TabIndex = 5;
+			this.firstNameBox.TabIndex = 3;
 			// 
 			// guestNumberBox
 			// 
 			this.guestNumberBox.Location = new System.Drawing.Point(152, 211);
 			this.guestNumberBox.Name = "guestNumberBox";
 			this.guestNumberBox.Size = new System.Drawing.Size(128, 20);
-			this.guestNumberBox.TabIndex = 6;
+			this.guestNumberBox.TabIndex = 7;
 			// 
 			// button1
 			// 
 			this.button1.Location = new System.Drawing.Point(27, 396);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(104, 41);
-			this.button1.TabIndex = 8;
+			this.button1.TabIndex = 12;
 			this.button1.Text = "Request Booking";
 			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
@@ -114,7 +114,7 @@
 			this.label5.Location = new System.Drawing.Point(7, 0);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(603, 39);
-			this.label5.TabIndex = 9;
+			this.label5.TabIndex = 13;
 			this.label5.Text = "Restaurant Booking Intermediary (RBI)";
 			this.label5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
@@ -126,7 +126,7 @@
 			this.datePicker.MinDate = new System.DateTime(2021, 4, 28, 0, 0, 0, 0);
 			this.datePicker.Name = "datePicker";
 			this.datePicker.Size = new System.Drawing.Size(128, 20);
-			this.datePicker.TabIndex = 11;
+			this.datePicker.TabIndex = 9;
 			this.datePicker.Value = new System.DateTime(2021, 4, 28, 0, 0, 0, 0);
 			// 
 			// comboBox1
@@ -138,21 +138,21 @@
 			this.comboBox1.Location = new System.Drawing.Point(152, 55);
 			this.comboBox1.Name = "comboBox1";
 			this.comboBox1.Size = new System.Drawing.Size(128, 21);
-			this.comboBox1.TabIndex = 12;
+			this.comboBox1.TabIndex = 1;
 			// 
 			// lastNameBox
 			// 
 			this.lastNameBox.Location = new System.Drawing.Point(152, 159);
 			this.lastNameBox.Name = "lastNameBox";
 			this.lastNameBox.Size = new System.Drawing.Size(128, 20);
-			this.lastNameBox.TabIndex = 14;
+			this.lastNameBox.TabIndex = 5;
 			// 
 			// label6
 			// 
 			this.label6.Location = new System.Drawing.Point(27, 161);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(104, 20);
-			this.label6.TabIndex = 13;
+			this.label6.TabIndex = 4;
 			this.label6.Text = "Last Name:";
 			// 
 			// timePicker
@@ -165,7 +165,7 @@
 			this.timePicker.Name = "timePicker";
 			this.timePicker.ShowUpDown = true;
 			this.timePicker.Size = new System.Drawing.Size(128, 20);
-			this.timePicker.TabIndex = 16;
+			this.timePicker.TabIndex = 11;
 			this.timePicker.Value = new System.DateTime(2021, 4, 28, 0, 0, 0, 0);
 			// 
 			// label7
@@ -173,7 +173,7 @@
 			this.label7.Location = new System.Drawing.Point(27, 328);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(104, 20);
-			this.label7.TabIndex = 15;
+			this.label7.TabIndex = 10;
 			this.label7.Text = "Time";
 			// 
 			// Form1
