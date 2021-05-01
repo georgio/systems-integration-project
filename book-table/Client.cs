@@ -74,7 +74,7 @@ namespace booking
 			System.Messaging.Message msg = new System.Messaging.Message();
 			msg.ResponseQueue = resQ;
 
-			string time = reservation.time.ToString("hh:mm");
+			string time = reservation.time.ToString("HH:mm");
 			if (reservation.restaurantID == 1)
 			{
 				Reservation1 r;
