@@ -73,7 +73,7 @@ namespace booking
 			if (!MessageQueue.Exists(msgQR1.Path))
 				msgQR1 = MessageQueue.Create(msgQR1.Path);
 			msgQR1.Send(msg);
-			msgQR1.Close();
+			// msgQR1.Close();
 
 		}
 		private void handleRestaurant2(string bookingID)
@@ -93,7 +93,7 @@ namespace booking
 			if (!MessageQueue.Exists(msgQR2.Path))
 				msgQR2 = MessageQueue.Create(msgQR2.Path);
 			msgQR2.Send(msg);
-			msgQR2.Close();
+			// msgQR2.Close();
 		}
 		private void MessageEventHandler(object sender, ReceiveCompletedEventArgs e)
 		{
