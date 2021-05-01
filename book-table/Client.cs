@@ -124,7 +124,7 @@ namespace booking
 		}
 		private void displayResponse(BookingResponse res)
 		{
-			GenericReservation r = reservations.Find(r => r.Id == res.Id);
+			GenericReservation r = reservations.Find(x => x.Id == res.Id);
 
 			StringBuilder sb = new StringBuilder();
 
