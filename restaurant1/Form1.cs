@@ -28,7 +28,7 @@ namespace booking
 			try
 			{
 				((XmlMessageFormatter)msgQ.Formatter).TargetTypes = new Type[] { typeof(Booking) };
-				msqQ.MessageReadPropertyFilter.CorrelationId = true;
+				msgQ.MessageReadPropertyFilter.CorrelationId = true;
 				message = msgQ.Receive(new TimeSpan(0, 0, 3));
 				booking = (Booking)message.Body;
 				sb = new StringBuilder();

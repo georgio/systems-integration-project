@@ -20,7 +20,7 @@ namespace booking
 			{
 
 				((XmlMessageFormatter)msgQ.Formatter).TargetTypes = new Type[] { typeof(Booking) };
-				msqQ.MessageReadPropertyFilter.CorrelationId = true;
+				msgQ.MessageReadPropertyFilter.CorrelationId = true;
 				msgQ.ReceiveCompleted += new ReceiveCompletedEventHandler(MessageEventHandler);
 				IAsyncResult msgQResult = msgQ.BeginReceive(new TimeSpan(1, 0, 0), msgQ);
 			}
@@ -62,10 +62,10 @@ namespace booking
 			res.time = req.time;
 			res.guestNumber = req.count;
 			res.status = (dr == DialogResult.Yes) ? "Confirmed" : "Non Confirmed";
+			res.Id = req.Id;
 
 			System.Messaging.Message msg = new System.Messaging.Message();
 			msg.Body = res;
-			msg.Id = req.Id;
 			resQ.Send(msg);
 			resQ.Close();
 		}
