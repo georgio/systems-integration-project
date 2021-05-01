@@ -39,9 +39,7 @@ namespace booking
 		}
 		private void button1_Click(object sender, System.EventArgs e)
 		{
-			var bytes = new byte[8];
-			new Random().NextBytes(bytes);
-			string bookingID = Encoding.Default.GetString(bytes);
+			string bookingID = new Random().NextBytes(0, 10000).toString();
 			if (comboBox1.SelectedItem.ToString() == "Restaurant 1")
 			{
 				handleRestaurant1(bookingID);
