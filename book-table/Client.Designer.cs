@@ -1,6 +1,6 @@
 ﻿namespace booking
 {
-	partial class Clien
+	partial class Client
 	{
 		/// <summary> 
 		/// Summary description for Form1. 
