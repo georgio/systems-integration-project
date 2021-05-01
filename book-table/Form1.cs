@@ -12,24 +12,17 @@ namespace booking
 {
 	public partial class Form1 : Form
 	{
-		MessageQueue msgQR1 = new MessageQueue();
-		MessageQueue msgQR2 = new MessageQueue();
-		MessageQueue resQ = new MessageQueue();
+		MessageQueue msgQR1 = new MessageQueue(@".\private$\restaurantOne");
+		MessageQueue msgQR2 = new MessageQueue(@".\private$\restaurantTwo");
+		MessageQueue resQ = new MessageQueue(@".\private$\client");
 		public Form1()
 		{
 			InitializeComponent();
-
-
-			msgQR1.Path = @".\private$\restaurantOne";
-			msgQR2.Path = @".\private$\restaurantTwo";
-			resQ.Path = @".\private$\client";
 			// create random message queue path
 			//var uid_bytes = new byte[8];
 			//new Random().NextBytes(uid_bytes);
 			//string uid = @".\private$\"+ Encoding.Default.GetString(uid_bytes);
 
-
-			Console.WriteLine(resQ.Path);
 
 			((XmlMessageFormatter)resQ.Formatter).TargetTypes = new Type[] { typeof(BookingResponse) };
 			try
@@ -49,12 +42,11 @@ namespace booking
 			var bytes = new byte[8];
 			new Random().NextBytes(bytes);
 			string bookingID = Encoding.Default.GetString(bytes);
-			Console.WriteLine(comboBox1.SelectedText);
-			if (comboBox1.SelectedText == "Restaurant 1")
+			if (comboBox1.SelectedItem.ToString() == "Restaurant 1")
 			{
 				handleRestaurant1(bookingID);
 			}
-			else if (comboBox1.SelectedText == "Restaurant 2")
+			else if (comboBox1.SelectedItem.ToString() == "Restaurant 2")
 			{
 				handleRestaurant2(bookingID);
 			}
