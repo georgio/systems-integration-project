@@ -66,13 +66,12 @@ namespace booking
 			reservation.Id = bookingID;
 			System.Messaging.Message msg = new System.Messaging.Message();
 			msg.Body = reservation;
-			msg.CorrelationId = bookingID;
 			msg.ResponseQueue = resQ;
 			if (!MessageQueue.Exists(msgQR1.Path))
 				msgQR1 = MessageQueue.Create(msgQR1.Path);
 			msgQR1.Send(msg);
 			msgQR1.Close();
-
+			MessageBox.Show("Order submitted!");
 		}
 		private void handleRestaurant2(string bookingID)
 		{
