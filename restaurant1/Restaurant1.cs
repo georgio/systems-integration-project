@@ -31,6 +31,7 @@ namespace booking
 				msgQ.MessageReadPropertyFilter.CorrelationId = true;
 				message = msgQ.Receive(new TimeSpan(0, 0, 3));
 				booking = (Reservation1)message.Body;
+				MessageQueue resQ = message.ResponseQueue;
 				sb = new StringBuilder();
 				sb.Append("Full Name: " + booking.fullName);
 				sb.Append("\n");
@@ -41,7 +42,7 @@ namespace booking
 
 				BookingResponse res;
 				res.status = (dr == DialogResult.Yes) ? "Confirmed" : "Non Confirmed";
-				res.Id = req.Id;
+				res.Id = booking.Id;
 
 				System.Messaging.Message msg = new System.Messaging.Message();
 				msg.Body = res;
