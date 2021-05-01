@@ -10,13 +10,13 @@ using System.Messaging;
 
 namespace booking
 {
-	public partial class Form1 : Form
+	public partial class Client : Form
 	{
 		MessageQueue msgQR1 = new MessageQueue(@".\private$\restaurantOne");
 		MessageQueue msgQR2 = new MessageQueue(@".\private$\restaurantTwo");
 		MessageQueue resQ = new MessageQueue(@".\private$\client");
 
-		public Form1()
+		public Client()
 		{
 			InitializeComponent();
 			// create random message queue path
@@ -129,8 +129,7 @@ namespace booking
 		}
 		public struct BookingResponse
 		{
-			public string firstName, lastName, date, time, status, Id;
-			public int guestNumber;
+			public string status, Id;
 		}
 	}
 }
