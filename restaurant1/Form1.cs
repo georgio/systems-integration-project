@@ -16,7 +16,7 @@ namespace booking
 		public Form1()
 		{
 			InitializeComponent();
-			msgQ.Path = @".\private$\restaurantOne
+			msgQ.Path = @".\private$\restaurantOne";
 		}
 
 		private void button2_Click(object sender, System.EventArgs e)

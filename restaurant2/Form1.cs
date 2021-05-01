@@ -12,7 +12,7 @@ namespace booking
 {
 	public partial class Form1 : Form
 	{
-		MessageQueue msgQ = new MessageQueue(@".\private$\restaurantTwo"
+		MessageQueue msgQ = new MessageQueue(@".\private$\restaurantTwo");
 		public Form1()
 		{
 			InitializeComponent();
