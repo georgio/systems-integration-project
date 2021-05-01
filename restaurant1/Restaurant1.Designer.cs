@@ -1,6 +1,6 @@
 ﻿namespace booking
 {
-	partial class Resta
+	partial class Restaurant1
 	{
 		private System.Windows.Forms.Button button2;
 		/// <summary> 
