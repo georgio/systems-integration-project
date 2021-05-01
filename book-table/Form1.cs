@@ -12,11 +12,14 @@ namespace booking
 {
 	public partial class Form1 : Form
 	{
-		MessageQueue msgQR1 = new MessageQueue(@".\private$\restaurantOne");
-		MessageQueue msgQR2 = new MessageQueue(@".\private$\restaurantTwo");
-		MessageQueue resQ = new MessageQueue(@".\private$\client");
+		MessageQueue msgQR1 = new MessageQueue();
+		MessageQueue msgQR2 = new MessageQueue();
+		MessageQueue resQ = new MessageQueue();
 		public Form1()
 		{
+			msgQR1.Path = @".\private$\restaurantOne";
+			msgQR2.Path = @".\private$\restaurantTwo";
+			resQ.Path = @".\private$\client";
 			// create random message queue path
 			//var uid_bytes = new byte[8];
 			//new Random().NextBytes(uid_bytes);
