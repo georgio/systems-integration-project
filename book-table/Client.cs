@@ -16,6 +16,8 @@ namespace booking
 		MessageQueue msgQR2 = new MessageQueue(@".\private$\restaurantTwo");
 		MessageQueue resQ = new MessageQueue(@".\private$\client");
 
+		List<GenericReservation> reservations = new List<GenericReservation>();
+
 		public Client()
 		{
 			InitializeComponent();
@@ -23,8 +25,6 @@ namespace booking
 			//var uid_bytes = new byte[8];
 			//new Random().NextBytes(uid_bytes);
 			//string uid = @".\private$\"+ Encoding.Default.GetString(uid_bytes);
-
-
 			((XmlMessageFormatter)resQ.Formatter).TargetTypes = new Type[] { typeof(BookingResponse) };
 			try
 			{
@@ -35,60 +35,84 @@ namespace booking
 			}
 			catch (Exception e)
 			{
-				MessageBox.Show(e.Message);
+				MessageBox.Show("Error", e.Message);
 			}
 
 		}
 		private void button1_Click(object sender, System.EventArgs e)
 		{
-			string bookingID = new Random().Next(0, 10000).ToString();
+			GenericReservation reservation;
+			reservation.Id = new Random().Next(0, 1000000).ToString();
+
 			if (comboBox1.SelectedItem.ToString() == "Restaurant 1")
 			{
-				handleRestaurant1(bookingID);
+				reservation.restaurantID = 1;
 			}
 			else if (comboBox1.SelectedItem.ToString() == "Restaurant 2")
 			{
-				handleRestaurant2(bookingID);
+				reservation.restaurantID = 2;
 			}
 			else
 			{
-				// error
+				MessageBox.Show("Error", "Please select a correct restaurant");
+				return;
 			}
 
-
-		}
-		private void handleRestaurant1(string bookingID)
-		{
-			Reservation1 reservation;
-			reservation.dateTime = datePicker.Text + " " + timePicker.Value.ToString("hh:mm");
-			reservation.fullName = firstNameBox.Text + " " + lastNameBox.Text;
-			reservation.persons = Convert.ToInt32(guestNumberBox.Text);
-			reservation.Id = bookingID;
-			System.Messaging.Message msg = new System.Messaging.Message();
-			msg.Body = reservation;
-			msg.ResponseQueue = resQ;
-			if (!MessageQueue.Exists(msgQR1.Path))
-				msgQR1 = MessageQueue.Create(msgQR1.Path);
-			msgQR1.Send(msg);
-			msgQR1.Close();
-			MessageBox.Show("Order submitted!");
-		}
-		private void handleRestaurant2(string bookingID)
-		{
-			Reservation2 reservation;
 			reservation.date = datePicker.Text;
-			reservation.time = timePicker.Value.ToString("hh:mm");
+			reservation.time = timePicker.Value;
+
 			reservation.firstName = firstNameBox.Text;
 			reservation.lastName = lastNameBox.Text;
-			reservation.count = Convert.ToInt32(guestNumberBox.Text);
-			reservation.Id = bookingID;
+
+			reservation.guests = Convert.ToInt32(guestNumberBox.Text);
+
+			reservations.Add(reservation);
+			processReservation(reservation);
+		}
+		private void processReservation(GenericReservation reservation)
+		{
 			System.Messaging.Message msg = new System.Messaging.Message();
-			msg.Body = reservation;
 			msg.ResponseQueue = resQ;
-			if (!MessageQueue.Exists(msgQR2.Path))
-				msgQR2 = MessageQueue.Create(msgQR2.Path);
-			msgQR2.Send(msg);
-			msgQR2.Close();
+
+			string time = reservation.time.ToString("hh:mm");
+			if (reservation.restaurantID == 1)
+			{
+				Reservation1 r;
+				r.dateTime = reservation.date + " " + time;
+				r.fullName = reservation.firstName + " " + reservation.lastName;
+				r.persons = reservation.guests;
+				r.Id = reservation.Id;
+
+				msg.Body = r;
+
+				if (!MessageQueue.Exists(msgQR1.Path))
+					msgQR1 = MessageQueue.Create(msgQR1.Path);
+
+				msgQR1.Send(msg);
+				msgQR1.Close();
+			}
+			else if (reservation.restaurantID == 2)
+			{
+				Reservation2 r;
+				r.date = reservation.date;
+				r.time = time;
+				r.firstName = reservation.firstName;
+				r.lastName = reservation.lastName;
+				r.count = reservation.guests;
+				r.Id = reservation.Id;
+
+				msg.Body = r;
+				if (!MessageQueue.Exists(msgQR2.Path))
+					msgQR2 = MessageQueue.Create(msgQR2.Path);
+
+				msgQR2.Send(msg);
+				msgQR2.Close();
+			}
+			else
+			{
+				MessageBox.Show("Invalid Restaurant.", "Error");
+			}
+
 			MessageBox.Show("Order submitted!");
 		}
 		private void MessageEventHandler(object sender, ReceiveCompletedEventArgs e)
@@ -100,22 +124,35 @@ namespace booking
 		}
 		private void displayResponse(BookingResponse res)
 		{
+			let r = reservations.Find(r => r.Id == res.Id);
+
 			StringBuilder sb = new StringBuilder();
 
+			sb.Append("\n");
+			sb.Append("Restaurant: " + r.restaurantID.ToString());
+			sb.Append("\n");
 			sb.Append("Booked by: ");
-			sb.Append("\n\tFirst Name:" + res.firstName);
-			sb.Append("\n\tLast Name: " + res.lastName);
+			sb.Append("\n\tFirst Name:" + r.firstName);
+			sb.Append("\n\tLast Name: " + r.lastName);
 			sb.Append("\n");
-			sb.Append("Guests: " + res.guestNumber.ToString());
+			sb.Append("Guests: " + r.guests.ToString());
 			sb.Append("\n");
-			sb.Append("Time: " + res.time);
+			sb.Append("Date: " + r.date);
 			sb.Append("\n");
-			sb.Append("Date: " + res.date);
+			sb.Append("Time: " + r.time.ToString("h:mmtt"));
 			sb.Append("\n");
 			sb.Append("\n");
 			sb.Append("Status: " + res.status);
 
 			MessageBox.Show(sb.ToString(), "Booking Response Received!");
+
+			reservations.Remove(r);
+		}
+		public struct GenericReservation
+		{
+			public string firstName, lastName, Id, date;
+			public DateTime time;
+			public int restaurantID, guests;
 		}
 		public struct Reservation1
 		{
