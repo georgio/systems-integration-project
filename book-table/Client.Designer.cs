@@ -161,7 +161,7 @@
 			this.timePicker.CustomFormat = "h:mmtt";
 			this.timePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
 			this.timePicker.Location = new System.Drawing.Point(152, 325);
-			this.timePicker.MinDate = System.DateTime.Now;
+			this.timePicker.MinDate = new System.DateTime(2021, 4, 28, 0, 0, 0, 0);
 			this.timePicker.Name = "timePicker";
 			this.timePicker.ShowUpDown = true;
 			this.timePicker.Size = new System.Drawing.Size(128, 20);
