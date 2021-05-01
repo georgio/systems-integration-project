@@ -1,6 +1,6 @@
 ﻿namespace booking
 {
-	partial class Resta
+	partial class Restaurant2
 	{
 		/// <summary> 
 		/// Required designer variable. 
