@@ -86,11 +86,11 @@ namespace booking
 			System.Messaging.Message msg = new System.Messaging.Message();
 			msg.Body = reservation;
 			msg.ResponseQueue = resQ;
-			msg.CorrelationId = bookingID;
 			if (!MessageQueue.Exists(msgQR2.Path))
 				msgQR2 = MessageQueue.Create(msgQR2.Path);
 			msgQR2.Send(msg);
 			msgQR2.Close();
+			MessageBox.Show("Order submitted!");
 		}
 		private void MessageEventHandler(object sender, ReceiveCompletedEventArgs e)
 		{
