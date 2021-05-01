@@ -17,6 +17,9 @@ namespace booking
 		MessageQueue resQ = new MessageQueue();
 		public Form1()
 		{
+			InitializeComponent();
+
+
 			msgQR1.Path = @".\private$\restaurantOne";
 			msgQR2.Path = @".\private$\restaurantTwo";
 			resQ.Path = @".\private$\client";
@@ -25,7 +28,6 @@ namespace booking
 			//new Random().NextBytes(uid_bytes);
 			//string uid = @".\private$\"+ Encoding.Default.GetString(uid_bytes);
 
-			InitializeComponent();
 
 			Console.WriteLine(resQ.Path);
 
