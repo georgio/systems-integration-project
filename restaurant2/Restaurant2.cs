@@ -10,16 +10,17 @@ using System.Messaging;
 
 namespace booking
 {
-	public partial class Form1 : Form
+	public partial class Restaurant2 : Form
 	{
-		MessageQueue msgQ = new MessageQueue(@".\private$\restaurant2");
-		public Form1()
+		MessageQueue msgQ = new MessageQueue(@".\private$\restaurantTwo");
+		public Restaurant2()
 		{
 			InitializeComponent();
 			try
 			{
 
-				((XmlMessageFormatter)msgQ.Formatter).TargetTypes = new Type[] { typeof(Booking) };
+				((XmlMessageFormatter)msgQ.Formatter).TargetTypes = new Type[] { typeof(Reservation2) };
+				msgQ.MessageReadPropertyFilter.CorrelationId = true;
 				msgQ.ReceiveCompleted += new ReceiveCompletedEventHandler(MessageEventHandler);
 				IAsyncResult msgQResult = msgQ.BeginReceive(new TimeSpan(1, 0, 0), msgQ);
 			}
@@ -31,11 +32,11 @@ namespace booking
 		private void MessageEventHandler(object sender, ReceiveCompletedEventArgs e)
 		{
 			System.Messaging.Message msg = ((MessageQueue)e.AsyncResult.AsyncState).EndReceive(e.AsyncResult);
-			Booking req = (Booking)msg.Body;
-			handleRequest(req, msg.CorrelationId, msg.ResponseQueue);
+			Reservation2 req = (Reservation2)msg.Body;
+			handleRequest(req, msg.ResponseQueue);
 			IAsyncResult AsyncResult = ((MessageQueue)e.AsyncResult.AsyncState).BeginReceive(new TimeSpan(1, 0, 0), ((MessageQueue)e.AsyncResult.AsyncState));
 		}
-		private void handleRequest(Booking req, string bookingID, MessageQueue resQ)
+		private void handleRequest(Reservation2 req, MessageQueue resQ)
 		{
 			StringBuilder sb = new StringBuilder();
 
@@ -52,31 +53,25 @@ namespace booking
 			sb.Append("\n");
 			sb.Append("Approve booking request?");
 
-			DialogResult dr = MessageBox.Show(sb.ToString(), "Booking Response Received!", MessageBoxButtons.YesNo);
+			DialogResult dr = MessageBox.Show(sb.ToString(), "Booking Received!", MessageBoxButtons.YesNo);
 
 			BookingResponse res;
-			res.firstName = req.firstName;
-			res.lastName = req.lastName;
-			res.date = req.date;
-			res.time = req.time;
-			res.guestNumber = req.count;
 			res.status = (dr == DialogResult.Yes) ? "Confirmed" : "Non Confirmed";
+			res.Id = req.Id;
 
 			System.Messaging.Message msg = new System.Messaging.Message();
 			msg.Body = res;
-			msg.CorrelationId = bookingID;
 			resQ.Send(msg);
 			resQ.Close();
 		}
-		public struct Booking
+		public struct Reservation2
 		{
-			public string firstName, lastName, date, time;
+			public string firstName, lastName, date, time, Id;
 			public int count;
 		}
 		public struct BookingResponse
 		{
-			public string firstName, lastName, date, time, status;
-			public int guestNumber;
+			public string status, Id;
 		}
 
 	}
