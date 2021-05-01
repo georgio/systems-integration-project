@@ -15,6 +15,7 @@ namespace booking
 		MessageQueue msgQR1 = new MessageQueue(@".\private$\restaurantOne");
 		MessageQueue msgQR2 = new MessageQueue(@".\private$\restaurantTwo");
 		MessageQueue resQ = new MessageQueue(@".\private$\client");
+
 		public Form1()
 		{
 			InitializeComponent();
@@ -28,6 +29,7 @@ namespace booking
 			try
 			{
 
+				resQ.MessageReadPropertyFilter.CorrelationId = true;
 				resQ.ReceiveCompleted += new ReceiveCompletedEventHandler(MessageEventHandler);
 				IAsyncResult resQResult = resQ.BeginReceive(new TimeSpan(1, 0, 0), resQ);
 			}
@@ -61,6 +63,7 @@ namespace booking
 			reservation.dateTime = datePicker.Text + " " + timePicker.Value.ToString("hh:mm");
 			reservation.fullName = firstNameBox.Text + " " + lastNameBox.Text;
 			reservation.persons = Convert.ToInt32(guestNumberBox.Text);
+			reservation.Id = bookingID;
 			System.Messaging.Message msg = new System.Messaging.Message();
 			msg.Body = reservation;
 			msg.CorrelationId = bookingID;
@@ -68,7 +71,7 @@ namespace booking
 			if (!MessageQueue.Exists(msgQR1.Path))
 				msgQR1 = MessageQueue.Create(msgQR1.Path);
 			msgQR1.Send(msg);
-			// msgQR1.Close();
+			msgQR1.Close();
 
 		}
 		private void handleRestaurant2(string bookingID)
@@ -79,8 +82,7 @@ namespace booking
 			reservation.firstName = firstNameBox.Text;
 			reservation.lastName = lastNameBox.Text;
 			reservation.count = Convert.ToInt32(guestNumberBox.Text);
-			Console.WriteLine("here");
-			Console.WriteLine(reservation);
+			reservation.Id = bookingID;
 			System.Messaging.Message msg = new System.Messaging.Message();
 			msg.Body = reservation;
 			msg.ResponseQueue = resQ;
@@ -88,7 +90,7 @@ namespace booking
 			if (!MessageQueue.Exists(msgQR2.Path))
 				msgQR2 = MessageQueue.Create(msgQR2.Path);
 			msgQR2.Send(msg);
-			// msgQR2.Close();
+			msgQR2.Close();
 		}
 		private void MessageEventHandler(object sender, ReceiveCompletedEventArgs e)
 		{
@@ -118,17 +120,17 @@ namespace booking
 		}
 		public struct Reservation1
 		{
-			public string fullName, dateTime;
+			public string fullName, dateTime, Id;
 			public int persons;
 		}
 		public struct Reservation2
 		{
-			public string firstName, lastName, date, time;
+			public string firstName, lastName, date, time, Id;
 			public int count;
 		}
 		public struct BookingResponse
 		{
-			public string firstName, lastName, date, time, status;
+			public string firstName, lastName, date, time, status, Id;
 			public int guestNumber;
 		}
 	}

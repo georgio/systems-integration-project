@@ -20,6 +20,7 @@ namespace booking
 			{
 
 				((XmlMessageFormatter)msgQ.Formatter).TargetTypes = new Type[] { typeof(Booking) };
+				msqQ.MessageReadPropertyFilter.CorrelationId = true;
 				msgQ.ReceiveCompleted += new ReceiveCompletedEventHandler(MessageEventHandler);
 				IAsyncResult msgQResult = msgQ.BeginReceive(new TimeSpan(1, 0, 0), msgQ);
 			}
@@ -32,10 +33,10 @@ namespace booking
 		{
 			System.Messaging.Message msg = ((MessageQueue)e.AsyncResult.AsyncState).EndReceive(e.AsyncResult);
 			Booking req = (Booking)msg.Body;
-			handleRequest(req, msg.CorrelationId, msg.ResponseQueue);
+			handleRequest(req, msg.ResponseQueue);
 			IAsyncResult AsyncResult = ((MessageQueue)e.AsyncResult.AsyncState).BeginReceive(new TimeSpan(1, 0, 0), ((MessageQueue)e.AsyncResult.AsyncState));
 		}
-		private void handleRequest(Booking req, string bookingID, MessageQueue resQ)
+		private void handleRequest(Booking req, MessageQueue resQ)
 		{
 			StringBuilder sb = new StringBuilder();
 
@@ -64,18 +65,18 @@ namespace booking
 
 			System.Messaging.Message msg = new System.Messaging.Message();
 			msg.Body = res;
-			msg.CorrelationId = bookingID;
+			msg.Id = req.Id;
 			resQ.Send(msg);
 			resQ.Close();
 		}
 		public struct Booking
 		{
-			public string firstName, lastName, date, time;
+			public string firstName, lastName, date, time, Id;
 			public int count;
 		}
 		public struct BookingResponse
 		{
-			public string firstName, lastName, date, time, status;
+			public string firstName, lastName, date, time, status, Id;
 			public int guestNumber;
 		}
 

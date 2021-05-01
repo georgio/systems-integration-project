@@ -28,9 +28,9 @@ namespace booking
 			try
 			{
 				((XmlMessageFormatter)msgQ.Formatter).TargetTypes = new Type[] { typeof(Booking) };
+				msqQ.MessageReadPropertyFilter.CorrelationId = true;
 				message = msgQ.Receive(new TimeSpan(0, 0, 3));
 				booking = (Booking)message.Body;
-
 				sb = new StringBuilder();
 				sb.Append("Full Name: " + booking.fullName);
 				sb.Append("\n");
@@ -47,12 +47,12 @@ namespace booking
 		}
 		public struct Booking
 		{
-			public string fullName, dateTime;
+			public string fullName, dateTime, Id;
 			public int persons;
 		}
 		public struct BookingResponse
 		{
-			public string firstName, lastName, date, time, status;
+			public string firstName, lastName, date, time, status, Id;
 			public int guestNumber;
 		}
 	}
